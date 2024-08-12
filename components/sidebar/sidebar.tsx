@@ -2,8 +2,9 @@ import { useSession } from "next-auth/react";
 import React from "react";
 import { Logo } from "./logo";
 import Navbar from "../navbar/navbar";
-import TweetButton from "../create-tweet/tweet-button"; 
+import TweetButton from "../create-tweet/tweet-button";
 import SessionUserButton from "../auth_user/session-user-button";
+import GithubButton from "./btn-github";
 
 function Sidebar() {
   const { data: session } = useSession();
@@ -16,12 +17,17 @@ function Sidebar() {
       <div className="">
         <Navbar />
       </div>
+      <div className="xxl:justify-start  flex justify-center">
+        <GithubButton />
+      </div>
+
+
       {session && (
         <div className="xxl:justify-start  flex justify-center">
           <TweetButton />
         </div>
       )}
-
+     
       {session && (
         <div className="xxl:justify-start  mt-auto flex">
           <SessionUserButton />
