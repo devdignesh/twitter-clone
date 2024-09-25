@@ -61,24 +61,30 @@ cp .env.example .env
 
 ## Prisma Setup (MongoDB)
 
-
-#### 1. Generate Prisma Client
+#### 1. After cloning the project, simply run:
+```bash
+npm install
+```
+- This will automatically install <b>Prisma</b> and all the necessary dependencies
+#### 2. Generate Prisma Client
 
 ```bash
 npx prisma generate
 ```
-#### 2. MongoDB Configuration
+#### 3. MongoDB Configuration
 
 - The project uses MongoDB, and the connection is defined in the `.env` file. Make sure your `.env` includes the correct MongoDB connection string
 ``` bash
 DATABASE_URL="mongodb+srv://username:password@xxx.xxx.mongodb.net/twitter_clone"
 ```
 
-#### 3. Run Prisma Commands
+#### 4. Run Prisma Commands
 
 ```bash
 npx prisma db push
 ```
+
+#### 5. Done!
 
 ## Supabase Setup:
 #### 1. Create a Supabase Account
