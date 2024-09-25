@@ -1,7 +1,7 @@
 
 <h1 align="center">Twitter clone</h3>
 <p align="center">
-This project is a fully functional Twitter clone built using A Next.js 14 with SASS, TailwindCSS, Framer-motion, TypeScript, Tanstack Query, MongoDB, Supabase, Prisma, NextAuth and Zustand. It showcases advanced frontend and backend capabilities.
+Build a fully functional Twitter clone with using a <b>Next.js 14</b> with <b>TypeScript</b>, <b>Sass</b>, <b>TailwindCSS</b>, <b>Framer-motion</b>, <b>Tanstack Query</b>, <b>MongoDB</b>, <b>Supabase</b>, <b>Prisma</b>, <b>NextAuth</b> and <b>Zustand.</b> It showcases advanced frontend and backend capabilities.
 </p>
 
 <img width="1527" alt="twitter-clone-preview" src="https://tsedxkflgndtkvrmgbug.supabase.co/storage/v1/object/public/images/project_preview.png?t=2024-07-23T09%3A05%3A46.142Z">
@@ -29,17 +29,18 @@ https://x.com/imDignesh/status/1784166713694773756
 
 - [Next.js](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Sass](https://sass-lang.com/)
+- [Mongodb](https://www.mongodb.com/atlas/database)
+- [Prisma](https://www.prisma.io/)
+- [Supabase](https://supabase.com/docs)
+- [Zustand](https://zustand.surge.sh/)
 - [TanStack Query](https://tanstack.com/query/latest)
 - [NextAuth.js](https://next-auth.js.org/)
-- [Prisma](https://www.prisma.io/)
-- [Mongodb](https://www.mongodb.com/atlas/database)
-- [Supabase](https://supabase.com/docs)
 - [Upstash Redis](https://upstash.com/)
-- [Zustand](https://zustand.surge.sh/)
 - [zod](https://github.com/colinhacks/zod)
 - [SWR](https://swr.vercel.app/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [SCSS](https://sass-lang.com/)
+
 
 
 ## 🛠️ Installation 
@@ -61,7 +62,8 @@ cp .env.example .env
 
 ## Prisma Setup (MongoDB)
 
-#### 1. After cloning the project, simply run:
+#### 1. Install Dependencies
+
 ```bash
 npm install
 ```
@@ -95,8 +97,8 @@ npx prisma db push
 - After creating your project, go to the `API section` or `connect`.
 - Find `Project URL` and `API Key/anon key` for the following environment variables:
  ```bash
-NEXT_PUBLIC_SUPABASE_URL
-NEXT_PUBLIC_SUPABASE_ANON_KEY
+NEXT_PUBLIC_SUPABASE_URL="xxx"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="xxx"
 ```
 - Copy these keys and add them to your .env file.
 
