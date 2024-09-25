@@ -59,31 +59,57 @@ Before running the development server, make sure to create `.env` file in the ro
 cp .env.example .env
 ```
 
-## Prisma
+## Prisma Setup (MongoDB)
 
-This project leverages the power of Prisma ORM for seamless database interaction. Prisma provides a modern database toolkit that simplifies database access, allowing for efficient querying, migrations, and schema management.
 
-Run the following command to generate the Prisma client:
-
-```bash
-cp npx prisma generate
-```
-
-This command generates TypeScript typings for Prisma Client based on your database schema.
-
-After generating the Prisma client, ensure that any changes made to the database schema are synchronized with the actual database. Run the following command:
+#### 1. Generate Prisma Client
 
 ```bash
-cp npx prisma db push
+npx prisma generate
+```
+#### 2. MongoDB Configuration
+
+- The project uses MongoDB, and the connection is defined in the `.env` file. Make sure your `.env` includes the correct MongoDB connection string
+``` bash
+DATABASE_URL="mongodb+srv://username:password@xxx.xxx.mongodb.net/twitter_clone"
 ```
 
-This command applies any pending migrations to the database, ensuring that the local database reflects the latest schema changes made in the codebase.
+#### 3. Run Prisma Commands
 
-🔗 Useful Links:
-- [Prisma Documentation](https://www.prisma.io/docs)
-- [Prisma GitHub Repository](https://github.com/prisma/prisma)
+```bash
+npx prisma db push
+```
 
-## Docker Setup
+## Supabase Setup:
+#### 1. Create a Supabase Account
+
+- Visit [Supabase](https://supabase.com/), sign up, and create a new project.
+#### 2. Get API Keys
+
+- After creating your project, go to the `API section` or `connect`.
+- Find `Project URL` and `API Key/anon key` for the following environment variables:
+ ```bash
+NEXT_PUBLIC_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY
+```
+- Copy these keys and add them to your .env file.
+
+#### 3. Create Public Storage Buckets
+
+- Navigate to Storage in the Supabase dashboard.
+- Create three public buckets: `images`, `banners`, and `avatars`.
+- Set their public access policies so that users can upload and fetch files. Refer to this [detailed guide](https://blog.stackademic.com/upload-file-using-next-js-and-supabase-ad0af2360677) if you need help with configuring storage policies.
+
+#### 4. Set Permissions for Buckets
+
+- In each bucket, set the policy under `Configuration` to make sure the files can be publicly read.
+
+
+#### 5. That's it!
+
+Once done, your Supabase setup is complete and your application will now be able to store and retrieve images.
+
+## Docker
 This project includes Docker support for easier development and deployment.
 
 ### Prerequisites
