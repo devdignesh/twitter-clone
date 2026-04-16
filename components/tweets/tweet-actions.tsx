@@ -10,10 +10,10 @@ const TweetActions = ({ tweet }: { tweet: ITweet }) => {
   return (
     <>
       <CommentButton tweet={tweet} />
-      <RetweetButton  />
+      <RetweetButton tweet={tweet} />
       <LikeButton post={tweet} />
-      <ShareButton  />
-      <BookmarkButton  post={tweet}/>
+      <ShareButton />
+      <BookmarkButton post={tweet} />
     </>
   );
 };

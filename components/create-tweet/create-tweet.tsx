@@ -25,6 +25,7 @@ interface Props {
   placeholder?: string | null;
   in_reply_to_screen_name?: string | null;
   in_reply_to_tweet_id?: string | null;
+  quote_from_tweet_id?: string | null;
   inputId?: string;
   showBorder?: boolean;
 }
@@ -33,6 +34,7 @@ const CreateTweet = ({
   placeholder = "What's happening?",
   in_reply_to_screen_name,
   in_reply_to_tweet_id,
+  quote_from_tweet_id,
   inputId = "tweet-text",
   showBorder = true,
 }: Props) => {
@@ -62,6 +64,9 @@ const CreateTweet = ({
   }, [text]);
 
   if (!session) return null;
+
+  const isQuoteTweet = !!quote_from_tweet_id;
+  const isReply = !!in_reply_to_tweet_id;
 
   return (
     <div
@@ -189,7 +194,8 @@ const CreateTweet = ({
                 type="button"
                 disabled={
                   (text.length === 0 || text.length > 90) &&
-                  chosenImages.length === 0
+                  chosenImages.length === 0 &&
+                  !isQuoteTweet
                 }
                 className="px-6 w-fit bg-sky-500 text-white font-semibold"
                 onClick={() => {
@@ -199,10 +205,11 @@ const CreateTweet = ({
                     files: chosenImages.map((img) => img.file),
                     in_reply_to_screen_name,
                     in_reply_to_tweet_id,
+                    quote_from_tweet_id,
                   });
                 }}
               >
-                {in_reply_to_tweet_id ? "Reply" : "Post"}
+                {isReply ? "Reply" : isQuoteTweet ? "Tweet" : "Post"}
               </Button>
             </div>
           </div>

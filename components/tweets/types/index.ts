@@ -1,6 +1,6 @@
 
 import { IUser } from "@/components/profile/types";
-import { Bookmarks, Like, Media, Post } from "@prisma/client";
+import { Bookmarks, Like, Media, Post, Retweet } from "@prisma/client";
 
 export interface ITweet extends Post {
   user: IUser;
@@ -8,15 +8,24 @@ export interface ITweet extends Post {
   media: IMedia[];
   comments: ITweet[];
   Bookmarks: IBookmark[];
+  Retweets: IRetweet[];
   pinned_by_users : IUser[];
+  retweet_from?: ITweet | null;
+  quote_from?: ITweet | null;
   _count: {
     likes: number;
     comments: number;
-    Bookmarks:number
+    Bookmarks: number;
+    Retweets: number;
   };
 }
 
 export interface ILike extends Like {
+  user: IUser;
+  tweet: ITweet;
+}
+
+export interface IRetweet extends Retweet {
   user: IUser;
   tweet: ITweet;
 }
