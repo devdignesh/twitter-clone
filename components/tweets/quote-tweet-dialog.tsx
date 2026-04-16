@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { Dialog, DialogContent, DialogHeader } from "../ui/dialog";
 import CreateTweet from "../create-tweet/create-tweet";
@@ -7,29 +7,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { formatDistanceToNowStrict } from "date-fns";
 import { highlightHashtags } from "@/components/tweets/highlight-hashtags";
 import TweetMedia from "@/components/tweets/tweet-media";
-import useDevModeStore from "@/components/dev-mode/store/use-dev-mode-store";
-import useDevTweetStore from "@/components/dev-mode/store/use-dev-tweet-store";
 
 const QuoteTweetDialog = () => {
   const quoteTweetDialog = useQuoteTweetStore();
   const tweet = quoteTweetDialog.tweet;
-  const [text, setText] = useState("");
-  const devMode = useDevModeStore();
-  const devTweetStore = useDevTweetStore();
 
   if (!tweet) return null;
 
   const createdAt = tweet?.createdAt
     ? formatDistanceToNowStrict(new Date(tweet.createdAt))
     : null;
-
-  const handleQuoteTweet = () => {
-    if (devMode.isEnabled) {
-      devTweetStore.addQuoteTweet(tweet.id, text);
-      quoteTweetDialog.onClose();
-      setText("");
-    }
-  };
 
   return (
     <Dialog open={quoteTweetDialog.isOpen} onOpenChange={quoteTweetDialog.onClose}>
@@ -47,29 +34,11 @@ const QuoteTweetDialog = () => {
         </DialogHeader>
 
         <div className="px-4 py-2">
-          <div className="w-full space-y-3">
-            <div className="overflow-x-hidden overflow-y-auto w-full max-h-[320px]">
-              <textarea
-                placeholder="Add a comment..."
-                value={text}
-                className="border-none placeholder:text-light-gray px-0 h-0 resize-none shadow-none text-base focus:border-none focus:outline-none focus-visible:outline-none outline-none active:border-none focus-visible:border-none w-full"
-                onChange={(e) => setText(e.target.value)}
-                style={{ height: '60px' }}
-              />
-            </div>
-
-            <div className="flex flex-wrap items-center">
-              <div className="flex items-center gap-2">
-                <button
-                  disabled={!devMode.isEnabled && (!text || text.length > 90)}
-                  onClick={handleQuoteTweet}
-                  className="px-6 w-fit bg-sky-500 text-white font-semibold py-2 px-4 rounded-full"
-                >
-                  Tweet
-                </button>
-              </div>
-            </div>
-          </div>
+          <CreateTweet
+            showBorder={false}
+            placeholder="Add a comment..."
+            quote_from_tweet_id={tweet.id}
+          />
         </div>
 
         <div className="mx-12 mb-4 border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
