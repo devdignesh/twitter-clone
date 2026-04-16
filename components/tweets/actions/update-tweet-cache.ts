@@ -16,6 +16,22 @@ export function updateTweetCache(
   );
 }
 
+export function updateRetweetCache(
+  queryClient: QueryClient,
+  tweetId: string,
+  userId: string
+) {
+  // update tweets queries
+  queryClient.setQueriesData({ queryKey: ["tweets"] }, (old: any) =>
+    updateRetweetsData(old, tweetId, userId)
+  );
+
+  // update bookmarks queries
+  queryClient.setQueriesData({ queryKey: ["bookmarks"] }, (old: any) =>
+    updateRetweetsData(old, tweetId, userId)
+  );
+}
+
 function updateTweetsData(old: any, tweetId: string, userId: string) {
   if (!old) return old;
 
@@ -40,6 +56,30 @@ function updateTweetsData(old: any, tweetId: string, userId: string) {
   return old;
 }
 
+function updateRetweetsData(old: any, tweetId: string, userId: string) {
+  if (!old) return old;
+
+  // infinite query (pages)
+  if (old.pages) {
+    return {
+      ...old,
+      pages: old.pages.map((page: any) => ({
+        ...page,
+        tweets: page.tweets.map((tweet: any) =>
+          tweet.id === tweetId ? toggleRetweetInTweet(tweet, userId) : tweet
+        ),
+      })),
+    };
+  }
+
+  // single tweet query
+  if (old.id === tweetId) {
+    return toggleRetweetInTweet(old, userId);
+  }
+
+  return old;
+}
+
 // toggle like in a single tweet object.
 
 function toggleLikeInTweet(tweet: any, userId: string) {
@@ -53,6 +93,27 @@ function toggleLikeInTweet(tweet: any, userId: string) {
     _count: {
       ...tweet._count,
       likes: hasLiked ? tweet._count.likes - 1 : tweet._count.likes + 1,
+    },
+  };
+}
+
+// toggle retweet in a single tweet object.
+
+function toggleRetweetInTweet(tweet: any, userId: string) {
+  const hasRetweeted = tweet.Retweets?.some(
+    (retweet: any) => retweet.userId === userId
+  );
+
+  return {
+    ...tweet,
+    Retweets: hasRetweeted
+      ? tweet.Retweets.filter((retweet: any) => retweet.userId !== userId)
+      : [...(tweet.Retweets || []), { userId, postId: tweet.id }],
+    _count: {
+      ...tweet._count,
+      Retweets: hasRetweeted
+        ? tweet._count.Retweets - 1
+        : (tweet._count.Retweets || 0) + 1,
     },
   };
 }

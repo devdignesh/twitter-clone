@@ -9,6 +9,7 @@ import Auth from "../auth_user";
 import MobileNavbar from "../navbar/mobile-navbar";
 import CreateTweetDialog from "../sidebar/create-tweet-model";
 import useCreateTweetStore from "../sidebar/store/useCreateTweetStore";
+import QuoteTweetDialog from "../tweets/quote-tweet-dialog";
 
 interface Props {
   children: React.ReactNode;
@@ -63,6 +64,7 @@ const Home = ({ children }: Props) => {
             isOpen={createTweetDialog.isOpen}
             onClose={createTweetDialog.onClose}
           />
+          <QuoteTweetDialog />
         </div>
       )}
     </>
