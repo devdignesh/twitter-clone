@@ -8,8 +8,10 @@ import TweetMedia from "./tweet-media";
 import TweetOwnerMenu from "./options/tweet-owner-menu";
 import { highlightHashtags } from "./highlight-hashtags";
 import { Pin } from "@/assets/pin";
+import { RetweetIcon } from "@/assets/retweet-icon";
 import { useSession } from "next-auth/react";
 import TweetVisitorMenu from "./options/tweet-visitor-menu";
+import QuotedTweet from "./quoted-tweet";
 import { motion } from "framer-motion";
 
 const Tweet = ({ tweet, pinned }: { tweet: ITweet; pinned?: boolean }) => {
@@ -34,6 +36,10 @@ const Tweet = ({ tweet, pinned }: { tweet: ITweet; pinned?: boolean }) => {
     return formatDistanceToNowStrict(new Date(tweet.createdAt));
   }, [tweet?.createdAt]);
 
+  const hasRetweeted = tweet?.Retweets?.some(
+    (retweet) => retweet.userId === session?.currentUser?.id
+  );
+
   return (
     <>
       <motion.div
@@ -50,6 +56,15 @@ const Tweet = ({ tweet, pinned }: { tweet: ITweet; pinned?: boolean }) => {
                 <Pin />
               </span>
               <span className="text-xs text-light-gray">Pinned post</span>
+            </div>
+          )}
+
+          {hasRetweeted && (
+            <div className="flex gap-2 mb-1 pl-4 items-center">
+              <span className="w-4 h-4 fill-green-500">
+                <RetweetIcon />
+              </span>
+              <span className="text-xs text-light-gray">You Retweeted</span>
             </div>
           )}
 
@@ -114,6 +129,10 @@ const Tweet = ({ tweet, pinned }: { tweet: ITweet; pinned?: boolean }) => {
 
                 {tweet?.media?.length > 0 && (
                   <TweetMedia media={tweet?.media} tweet_id={tweet?.id} />
+                )}
+
+                {tweet?.quote_from && (
+                  <QuotedTweet tweet={tweet.quote_from as ITweet} />
                 )}
               </div>
 

@@ -37,4 +37,5 @@ model User {
   following    User[]      @relation("Followers", fields: [followingIds], references: [id])
   followingIds String[]    @db.ObjectId
   Bookmarks    Bookmarks[] @relation("BookmarkBy")
+  Retweets     Retweet[]   @relation("RetweetedBy")
 }

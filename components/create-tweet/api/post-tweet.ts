@@ -9,18 +9,21 @@ export const PostTweet = async ({
   files,
   in_reply_to_screen_name,
   in_reply_to_tweet_id,
+  quote_from_tweet_id,
 }: {
   text: string;
   userId: string;
   files: File[];
   in_reply_to_screen_name?: string | null;
   in_reply_to_tweet_id?: string | null;
+  quote_from_tweet_id?: string | null;
 }) => {
   const tweet = {
     body: text,
     userId,
     ...(in_reply_to_screen_name && { in_reply_to_screen_name }),
     ...(in_reply_to_tweet_id && { in_reply_to_tweet_id }),
+    ...(quote_from_tweet_id && { quote_from_tweet_id }),
   };
   try {
 
