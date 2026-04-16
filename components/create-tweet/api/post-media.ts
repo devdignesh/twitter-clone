@@ -11,6 +11,12 @@ export const postMedia = async ({
   tweet_id?: string;
   message_id?: string;
 }) => {
+  if (!supabase) {
+    console.warn("⚠️ Supabase is not configured. Cannot upload media.");
+    console.warn("⚠️ Please configure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in .env file.");
+    return false;
+  }
+
   try {
     const uploadPromises = files.map(async (file) => {
       const imagePath = createId();
@@ -55,5 +61,6 @@ export const postMedia = async ({
       console.log("Error", error.message);
     }
     console.log(error.config);
+    return false;
   }
 };
