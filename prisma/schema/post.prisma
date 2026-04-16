@@ -9,6 +9,9 @@ model Post {
   in_reply_to_tweet_id    String?  @db.ObjectId
   image                   String?
   favorite_count          Int      @default(0)
+  retweet_count           Int      @default(0)
+  retweet_from_tweet_id   String?  @db.ObjectId
+  quote_from_tweet_id     String?  @db.ObjectId
   user                    User     @relation("UserPosts", fields: [userId], references: [id], onDelete: Cascade)
 
   media         Media[] @relation("Media")
@@ -18,6 +21,12 @@ model Post {
   likes           Like[]      @relation("Like")
   Bookmarks       Bookmarks[] @relation("BookmarkPost")
   pinned_by_users User[]      @relation("PinnedTweet")
+  Retweets        Retweet[]   @relation("Retweet")
+
+  retweet_from Post?   @relation("RetweetFrom", fields: [retweet_from_tweet_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  retweeted_by Post[]  @relation("RetweetFrom")
+  quote_from   Post?   @relation("QuoteFrom", fields: [quote_from_tweet_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  quoted_by    Post[]  @relation("QuoteFrom")
 }
 
 model Media {
