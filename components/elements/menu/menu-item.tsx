@@ -7,7 +7,7 @@ const MenuItem = ({
   color,
   className,
 }: {
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
   children: React.ReactNode;
   color?: "red" | "white";
   className?: string;

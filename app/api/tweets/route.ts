@@ -71,6 +71,7 @@ export async function GET(request: Request) {
         comments: true,
         media: true,
         pinned_by_users:true,
+        Retweets: true,
         Bookmarks: {
           include: {
             user: true,
@@ -90,10 +91,59 @@ export async function GET(request: Request) {
           },
         },
 
+        retweet_from: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                profileImage: true,
+                username: true,
+              },
+            },
+            media: true,
+            likes: true,
+            Retweets: true,
+            _count: {
+              select: {
+                likes: true,
+                comments: true,
+                Retweets: true,
+              },
+            },
+          },
+        },
+
+        quote_from: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                profileImage: true,
+                username: true,
+              },
+            },
+            media: true,
+            likes: true,
+            Retweets: true,
+            _count: {
+              select: {
+                likes: true,
+                comments: true,
+                Retweets: true,
+              },
+            },
+          },
+        },
+
         _count: {
           select: {
             likes: true,
             comments: true,
+            Retweets: true,
           },
         },
       },
